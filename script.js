@@ -1,0 +1,11 @@
+const menuButton=document.querySelector(".menu-toggle");
+const nav=document.querySelector(".nav");
+menuButton?.addEventListener("click",()=>nav.classList.toggle("open"));
+nav?.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>nav.classList.remove("open")));
+const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add("visible");observer.unobserve(entry.target)}}),{threshold:.12});
+document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
+const glow=document.querySelector(".cursor-glow");
+window.addEventListener("mousemove",e=>{if(glow){glow.style.left=e.clientX+"px";glow.style.top=e.clientY+"px"}});
+const sections=[...document.querySelectorAll("main section[id]")];
+const links=[...document.querySelectorAll(".nav a")];
+window.addEventListener("scroll",()=>{let current="";sections.forEach(s=>{if(window.scrollY>=s.offsetTop-160)current=s.id});links.forEach(a=>{a.classList.toggle("active",a.getAttribute("href")==="#"+current)})});
